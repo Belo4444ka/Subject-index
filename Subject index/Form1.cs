@@ -30,7 +30,11 @@ namespace Subject_index
             textBox3.TextChanged += textBoxSearch_TextChanged;
             this.FormClosing += Form1_FormClosed;
         }
-
+        /// <summary>
+        /// проверка сохранен ли проект перед загрытием
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Form1_FormClosed(object? sender, FormClosingEventArgs e)
         {
             if (isSave == false)
@@ -48,11 +52,19 @@ namespace Subject_index
             }
             
         }
-
+        /// <summary>
+        /// Метод запускающий таймер 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Timer_Tick(object sender, EventArgs e)
         {
             isSave = false;
         }
+        /// <summary>
+        /// функция по нахождаению слова при вбивании его в поле
+        /// </summary>
+        /// <param name="searchText"></param>
         private void SearchWords(string searchText)
         {
             dataGridView1.Rows.Clear();
@@ -112,7 +124,9 @@ namespace Subject_index
             // Растягиваем последнюю колонку
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
-
+        /// <summary>
+        /// метод отображение ввода, и проверки на наличе символов в строке
+        /// </summary>
         private void AddWordInDVG()
         {
             if (string.IsNullOrWhiteSpace(textBox1.Text))
@@ -134,6 +148,11 @@ namespace Subject_index
             textBox2.Clear();
             textBox2.Focus();
         }
+        /// <summary>
+        /// обработка нажатие кнопки сохранения
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSave_Click(object sender, EventArgs e)
         {
             SaveFileDialog saveDialog = new SaveFileDialog();
@@ -157,6 +176,11 @@ namespace Subject_index
                 MessageBox.Show("Сохранено!");
             }
         }
+        /// <summary>
+        /// обработчик кнопки экспорта в файл
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnExport_Click(object sender, EventArgs e)
         {
             SaveFileDialog saveDialog = new SaveFileDialog();
@@ -179,7 +203,11 @@ namespace Subject_index
                 MessageBox.Show("Сохранено!");
             }
         }
-
+        /// <summary>
+        /// обработчик загрузки данных в DataGrtidview
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnLoad_Click(object sender, EventArgs e)
         {
             OpenFileDialog LoadDialog = new OpenFileDialog();
@@ -192,6 +220,9 @@ namespace Subject_index
                 RefreshDataGridView();
             }
         }
+        /// <summary>
+        /// обработчик кнопки обновления
+        /// </summary>
         private void RefreshDataGridView()
         {
             dataGridView1.Rows.Clear();
@@ -203,6 +234,11 @@ namespace Subject_index
                 dataGridView1.Rows.Add(entry.Word, pagesString);
             }
         }
+        /// <summary>
+        /// обработка нажание на слово в DatagridView
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             // Проверяем, что клик не по заголовку (e.RowIndex >= 0)
@@ -221,6 +257,10 @@ namespace Subject_index
                 textBox2.Focus();
             }
         }
+        /// <summary>
+        /// Метод по созданию файла для печати
+        /// </summary>
+        /// <returns></returns>
         private string PreparePrintText()
         {
             string result = "ПРЕДМЕТНЫЙ УКАЗАТЕЛЬ\n";
@@ -262,7 +302,11 @@ namespace Subject_index
 
             return result;
         }
-
+        /// <summary>
+        /// обработчик кнопки для открытия окна печати
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void PrintDocument_PrintPage(object sender, PrintPageEventArgs e)
         {
             Font printFont = new Font("Courier New", 10);
@@ -289,7 +333,11 @@ namespace Subject_index
                 e.HasMorePages = false;
             }
         }
-
+        /// <summary>
+        /// кнопкеа вызова печати
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnPrint_Click(object sender, EventArgs e)
         {
             if (index.entries.Count == 0)
@@ -301,32 +349,32 @@ namespace Subject_index
             textToPrint = PreparePrintText();
             printPreviewDialog.ShowDialog();
         }
-
+        //кнопка обновления
         private void button5_Click(object sender, EventArgs e)
         {
             RefreshDataGridView();
         }
-
+        //снопка добавление слова
         private void button1_Click(object sender, EventArgs e)
         {
             AddWordInDVG();
         }
-
+        //кнопка сохранения
         private void button4_Click(object sender, EventArgs e)
         {
             btnSave_Click(sender, e);
         }
+        //кнопка экспорта
         private void button6_Click(object sender, EventArgs e)
         {
             btnExport_Click(sender, e);
         }
-
-
+        //кнопка загрузки данных
         private void button2_Click(object sender, EventArgs e)
         {
             btnLoad_Click(sender, e);
         }
-
+        //кнопка печати документа
         private void button3_Click(object sender, EventArgs e)
         {
             btnPrint_Click(sender,e);
